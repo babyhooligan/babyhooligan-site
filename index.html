@@ -3,7 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Delay & Reverb Calculator</title>
+  <title>Delay & Reverb Calculator – babyhooligan</title>
+
+  <!-- ✅ SEO META TAGS -->
+  <meta name="description" content="BPM-synced delay and reverb calculator for techno, dub techno and electronic music producers.">
+  <meta name="keywords" content="delay calculator, reverb calculator, BPM calculator, dub techno, techno, electronic music, music production, sound design, babyhooligan, YouTube tutorials">
+  <meta name="author" content="babyhooligan">
+  <link rel="canonical" href="https://babyhooligan.com/">
+
+  <!-- ✅ Open Graph / Facebook -->
+  <meta property="og:title" content="Delay & Reverb Calculator – babyhooligan" />
+  <meta property="og:description" content="BPM-based delay and reverb calculator for music producers." />
+  <meta property="og:image" content="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" />
+  <meta property="og:url" content="https://babyhooligan.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- ✅ Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Delay & Reverb Calculator – babyhooligan" />
+  <meta name="twitter:description" content="BPM-based delay and reverb calculator for electronic music producers." />
+  <meta name="twitter:image" content="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" />
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="https://babyhooligan.github.io/babyhooligan-site/favicon.png" />
 
   <!-- 🌐 Redirect from www to non-www -->
   <script>
@@ -13,11 +35,13 @@
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
+  
+  <!-- 🔽 Твой CSS остаётся без изменений ниже -->
   <style>
     :root {
       --bg: #f4f4f4;
       --text: #222;
-      --header-bg: #ffffff;
+      --header-bg: #f4f4f4;
       --header-link: #000000;
       --accent: #5c7896;
       --border: #ddd;
@@ -26,11 +50,10 @@
       --hover-text: #000000;
       --ui-radius: 10px;
     }
-
     body.dark {
       --bg: #1a1a1a;
       --text: #eaeaea;
-      --header-bg: #2a2a2a;
+      --header-bg: #1a1a1a;
       --header-link: #ffffff;
       --accent: #8aa0bf;
       --border: #444;
@@ -38,7 +61,6 @@
       --hover-bg: #3a5a40;
       --hover-text: #ffffff;
     }
-
     body {
       font-family: 'Inter Display', sans-serif;
       background: var(--bg);
@@ -47,7 +69,6 @@
       padding: 0;
       transition: background 0.3s, color 0.3s;
     }
-
     header {
       display: flex;
       align-items: center;
@@ -58,12 +79,10 @@
       top: 0;
       z-index: 10;
     }
-
     .header-left {
       display: flex;
       align-items: center;
     }
-
     .logo {
       width: 40px;
       height: 40px;
@@ -71,11 +90,9 @@
       object-fit: cover;
       transition: transform 0.3s ease;
     }
-
     .logo:hover {
       transform: scale(1.5);
     }
-
     .theme-toggle {
       width: 50px;
       height: 26px;
@@ -85,7 +102,6 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-
     .toggle-thumb {
       position: absolute;
       top: 3px;
@@ -96,11 +112,9 @@
       border-radius: 50%;
       transition: left 0.3s, background 0.3s;
     }
-
     body.dark .toggle-thumb {
       left: 27px;
     }
-
     main {
       display: flex;
       justify-content: center;
@@ -108,29 +122,24 @@
       margin: 0 auto;
       padding: 2rem;
     }
-
     .calculator-container {
       flex: 1;
       max-width: 800px;
       padding: 0 1rem;
     }
-
     .section {
       margin-bottom: 4rem;
     }
-
     .bpm-control {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 2rem;
     }
-
     .bpm-control label {
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
     }
-
     .bpm-control input[type="number"] {
       width: 160px;
       padding: 0.7rem;
@@ -143,13 +152,11 @@
       outline: none;
       transition: background 0.3s, border-color 0.3s;
     }
-
     .bpm-control input[type="number"]:focus {
       border-color: var(--accent);
       background: #e6f0ff;
       color: #004a99;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -159,47 +166,51 @@
       border-radius: var(--ui-radius);
       overflow: hidden;
     }
-
     th, td {
       padding: 0.7rem;
       text-align: center;
       border-bottom: 1px solid var(--border);
     }
-
     th {
       background: var(--table-bg);
       font-weight: 600;
     }
-
     tr {
       background: var(--table-bg);
       transition: background 0.3s, color 0.3s;
     }
-
     tr:hover {
       background: var(--hover-bg);
       color: var(--hover-text);
     }
-
     h1 {
       text-align: center;
       margin-bottom: 1rem;
     }
-
     footer {
-      text-align: center;
-      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
       font-size: 0.9rem;
       background: var(--bg);
       color: var(--text);
     }
-
+    .youtube-icon {
+      fill: #888;
+      transition: fill 0.3s;
+    }
+    body.dark .youtube-icon:hover {
+      fill: #fff;
+    }
+    body:not(.dark) .youtube-icon:hover {
+      fill: #000;
+    }
     @media (max-width: 1024px) {
       main {
         flex-direction: column;
         align-items: center;
       }
-
       header {
         flex-direction: column;
         gap: 1rem;
@@ -257,7 +268,12 @@
   </main>
 
   <footer>
-    &copy; 2025 Delay & Reverb Calculator. All rights reserved.
+    <div>© 2025 BabyHooligan</div>
+    <a href="https://youtube.com/@baby.hooligan?si=PHZCx66GTvvhCtpt" target="_blank" aria-label="YouTube">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 576 512" class="youtube-icon">
+        <path d="M549.7 124.1c-6.3-24-25.1-42.8-49-49.1C457.5 64 288 64 288 64s-169.5 0-212.7 11c-23.9 6.3-42.7 25.1-49 49.1C16 168.3 16 256 16 256s0 87.7 10.3 131.9c6.3 24 25.1 42.8 49 49.1C118.5 448 288 448 288 448s169.5 0 212.7-11c23.9-6.3 42.7-25.1 49-49.1C560 343.7 560 256 560 256s0-87.7-10.3-131.9zM232 336V176l142 80-142 80z"/>
+      </svg>
+    </a>
   </footer>
 
   <script>
