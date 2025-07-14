@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delay & Reverb Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #222;
+      --header-bg: #ffffff;
+      --header-link: #000000;
+      --accent: #5c7896;
+      --border: #ddd;
+      --table-bg: #ffffff;
+      --hover-bg: #d0f4de;
+      --hover-text: #000000;
+      --ui-radius: 10px;
+    }
+
+    body.dark {
+      --bg: #1a1a1a;
+      --text: #eaeaea;
+      --header-bg: #2a2a2a;
+      --header-link: #ffffff;
+      --accent: #8aa0bf;
+      --border: #444;
+      --table-bg: #2a2a2a;
+      --hover-bg: #3a5a40;
+      --hover-text: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter Display', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--header-bg);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.5);
+    }
+
+    .theme-toggle {
+      width: 50px;
+      height: 26px;
+      border-radius: 13px;
+      background: var(--header-link);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: var(--header-bg);
+      border-radius: 50%;
+      transition: left 0.3s, background 0.3s;
+    }
+
+    body.dark .toggle-thumb {
+      left: 27px;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .calculator-container {
+      flex: 1;
+      max-width: 800px;
+      padding: 0 1rem;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .bpm-control {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .bpm-control label {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .bpm-control input[type="number"] {
+      width: 160px;
+      padding: 0.7rem;
+      font-size: 1.3rem;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: var(--ui-radius);
+      background: var(--table-bg);
+      color: var(--text);
+      outline: none;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .bpm-control input[type="number"]:focus {
+      border-color: var(--accent);
+      background: #e6f0ff;
+      color: #004a99;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      background: var(--table-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--ui-radius);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 0.7rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--table-bg);
+      font-weight: 600;
+    }
+
+    tr {
+      background: var(--table-bg);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    tr:hover {
+      background: var(--hover-bg);
+      color: var(--hover-text);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    @media (max-width: 1024px) {
+      main {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="dark">
+  <header>
+    <div class="header-left">
+      <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
+    </div>
+    <div class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle light and dark mode">
+      <div class="toggle-thumb"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="calculator-container">
+      <div class="bpm-control">
+        <label for="bpmInput">BPM</label>
+        <input id="bpmInput" type="number" min="1" max="300" value="120" />
+      </div>
+
+      <h1>Reverb Calculator</h1>
+      <section class="section">
+        <table>
+          <thead>
+            <tr>
+              <th>Reverb Size</th>
+              <th>Pre-delay</th>
+              <th>Decay Time</th>
+              <th>Total Reverb Time</th>
+            </tr>
+          </thead>
+          <tbody id="reverbTableBody"></tbody>
+        </table>
+      </section>
+
+      <h1>Delay Time Calculator</h1>
+      <section class="section">
+        <table>
+          <thead>
+            <tr>
+              <th>Note Value</th>
+              <th>Notes</th>
+              <th>Dotted</th>
+              <th>Triplets</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Delay & Reverb Calculator. All rights reserved.
+  </footer>
+
+  <script>
+    const bpmInput = document.getElementById('bpmInput');
+    const tbody = document.getElementById('tableBody');
+    const reverbTbody = document.getElementById('reverbTableBody');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64", "1/128", "1/256", "1/512"];
+    const reverbSizes = [
+      { name: "Hall", preDelayBeats: 0.125, decayBeats: 7.875 },
+      { name: "Large Room", preDelayBeats: 0.0625, decayBeats: 3.875 },
+      { name: "Small Room", preDelayBeats: 0.03125, decayBeats: 1.53125 },
+      { name: "Tight Ambience", preDelayBeats: 0.0078125, decayBeats: 0.4921875 }
+    ];
+
+    function calcValues(bpm) {
+      return notes.map(note => {
+        let [base, denom] = note.split('/').map(Number);
+        let beatFactor = base / denom;
+        let ms = (60000 / bpm) * (4 * beatFactor);
+        let hz = 1000 / ms;
+        return {
+          note,
+          ms,
+          hz,
+          dottedMs: ms * 1.5,
+          dottedHz: 1000 / (ms * 1.5),
+          tripletMs: ms * 2 / 3,
+          tripletHz: 1000 / (ms * 2 / 3)
+        };
+      });
+    }
+
+    function updateDelayTable(bpm) {
+      const data = calcValues(bpm);
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${row.note}</td>
+            <td>${row.ms.toFixed(1)} ms / ${row.hz.toFixed(3)} Hz</td>
+            <td>${row.dottedMs.toFixed(1)} ms / ${row.dottedHz.toFixed(3)} Hz</td>
+            <td>${row.tripletMs.toFixed(1)} ms / ${row.tripletHz.toFixed(3)} Hz</td>
+          </tr>`;
+      });
+    }
+
+    function updateReverbTable(bpm) {
+      const beatMs = 60000 / bpm;
+      reverbTbody.innerHTML = '';
+      reverbSizes.forEach(size => {
+        const pre = size.preDelayBeats * beatMs;
+        const decay = size.decayBeats * beatMs;
+        const total = pre + decay;
+        reverbTbody.innerHTML += `
+          <tr>
+            <td>${size.name}</td>
+            <td>${pre.toFixed(2)} ms</td>
+            <td>${decay.toFixed(2)} ms</td>
+            <td>${total.toFixed(2)} ms</td>
+          </tr>`;
+      });
+    }
+
+    function updateTables() {
+      const bpm = Number(bpmInput.value);
+      if (!bpm || bpm < 1) return;
+      updateDelayTable(bpm);
+      updateReverbTable(bpm);
+    }
+
+    bpmInput.addEventListener('input', updateTables);
+    updateTables();
+
+    function setTheme(dark) {
+      if (dark) {
+        body.classList.add('dark');
+        themeToggle.setAttribute('aria-checked', 'true');
+      } else {
+        body.classList.remove('dark');
+        themeToggle.setAttribute('aria-checked', 'false');
+      }
+    }
+
+    setTheme(true);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = body.classList.contains('dark');
+      setTheme(!isDark);
+    });
+
+    themeToggle.addEventListener('keydown', (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        themeToggle.click();
+      }
+    });
+  </script>
+</body>
+</html>
