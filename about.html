@@ -181,7 +181,7 @@
     }
   </style>
 </head>
-<body class="dark">
+<body>
   <header>
     <div class="header-left">
       <a href="/"><img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" /></a>
@@ -217,27 +217,37 @@
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
-    function setTheme(dark) {
-      if (dark) {
+    function applySavedTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') {
         body.classList.add('dark');
-        themeToggle.setAttribute('aria-checked', 'true');
+        themeToggle?.setAttribute('aria-checked', 'true');
       } else {
         body.classList.remove('dark');
-        themeToggle.setAttribute('aria-checked', 'false');
+        themeToggle?.setAttribute('aria-checked', 'false');
       }
     }
 
-    setTheme(true);
-
-    themeToggle.addEventListener('click', () => {
+    function toggleTheme() {
       const isDark = body.classList.contains('dark');
-      setTheme(!isDark);
-    });
+      if (isDark) {
+        body.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        themeToggle.setAttribute('aria-checked', 'false');
+      } else {
+        body.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.setAttribute('aria-checked', 'true');
+      }
+    }
 
-    themeToggle.addEventListener('keydown', (e) => {
+    applySavedTheme();
+
+    themeToggle?.addEventListener('click', toggleTheme);
+    themeToggle?.addEventListener('keydown', (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        themeToggle.click();
+        toggleTheme();
       }
     });
   </script>
