@@ -7,7 +7,7 @@
   <link rel="canonical" href="https://babyhooligan.com/delay-reverb-time-calculator" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
-  
+
   <style>
     :root {
       --bg: #f4f4f4;
@@ -104,7 +104,7 @@
       height: 20px;
       background: var(--header-bg);
       border-radius: 50%;
-      transition: left 0.3s, background 0.3s;
+      transition: left 0.3s;
     }
 
     body.dark .toggle-thumb {
@@ -151,13 +151,6 @@
       background: var(--table-bg);
       color: var(--text);
       outline: none;
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    .bpm-control input[type="number"]:focus {
-      border-color: var(--accent);
-      background: #e6f0ff;
-      color: #004a99;
     }
 
     table {
@@ -177,13 +170,7 @@
     }
 
     th {
-      background: var(--table-bg);
       font-weight: 600;
-    }
-
-    tr {
-      background: var(--table-bg);
-      transition: background 0.3s, color 0.3s;
     }
 
     tr:hover {
@@ -221,38 +208,20 @@
 
     @media (max-width: 768px) {
       header {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
         justify-content: space-between;
-      }
-
-      .header-left {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .nav-link {
-        font-size: 0.95rem;
-      }
-
-      .theme-toggle {
-        margin-left: auto;
       }
     }
   </style>
 </head>
-<body class="dark">
+<body>
   <header>
     <div class="header-left">
-      <a href="/"><img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" /></a>
+      <a href="/"><img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" class="logo" /></a>
       <a href="/about" class="nav-link">About</a>
       <a href="/delay-reverb-time-calculator" class="nav-link">Calculator</a>
       <a href="/videos" class="nav-link">Videos</a>
     </div>
-    <div class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle light and dark mode">
-      <div class="toggle-thumb"></div>
-    </div>
+    <div class="theme-toggle" id="themeToggle"><div class="toggle-thumb"></div></div>
   </header>
 
   <main>
@@ -296,21 +265,21 @@
 
   <footer>
     <div>© 2025 BabyHooligan</div>
-    <a href="https://youtube.com/@baby.hooligan?si=PHZCx66GTvvhCtpt" target="_blank" aria-label="YouTube">
+    <a href="https://youtube.com/@baby.hooligan" target="_blank" aria-label="YouTube">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 576 512" class="youtube-icon">
-        <path d="M549.7 124.1c-6.3-24-25.1-42.8-49-49.1C457.5 64 288 64 288 64s-169.5 0-212.7 11c-23.9 6.3-42.7 25.1-49 49.1C16 168.3 16 256 16 256s0 87.7 10.3 131.9c6.3 24 25.1 42.8 49 49.1C118.5 448 288 448 288 448s169.5 0 212.7-11c23.9-6.3 42.7-25.1 49-49.1C560 343.7 560 256 560 256s0-87.7-10.3-131.9zM232 336V176l142 80-142 80z"/>
+        <path d="M549.7 124.1c-6.3-24-25.1-42.8-49-49.1C457.5 64 288 64 288 64s-169.5 0-212.7 11C51.4 81.3 32.6 100.1 26.3 124.1 16 168.3 16 256 16 256s0 87.7 10.3 131.9c6.3 24 25.1 42.8 49 49.1C118.5 448 288 448 288 448s169.5 0 212.7-11c23.9-6.3 42.7-25.1 49-49.1C560 343.7 560 256 560 256s0-87.7-10.3-131.9zM232 336V176l142 80-142 80z"/>
       </svg>
     </a>
   </footer>
 
   <script>
     const bpmInput = document.getElementById('bpmInput');
-    const tbody = document.getElementById('tableBody');
-    const reverbTbody = document.getElementById('reverbTableBody');
+    const tableBody = document.getElementById('tableBody');
+    const reverbTableBody = document.getElementById('reverbTableBody');
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
-    const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64", "1/128", "1/256", "1/512"];
+    const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32"];
     const reverbSizes = [
       { name: "Hall", preDelayBeats: 0.125, decayBeats: 7.875 },
       { name: "Large Room", preDelayBeats: 0.0625, decayBeats: 3.875 },
@@ -318,46 +287,31 @@
       { name: "Tight Ambience", preDelayBeats: 0.0078125, decayBeats: 0.4921875 }
     ];
 
-    function calcValues(bpm) {
-      return notes.map(note => {
-        let [base, denom] = note.split('/').map(Number);
-        let beatFactor = base / denom;
-        let ms = (60000 / bpm) * (4 * beatFactor);
-        let hz = 1000 / ms;
-        return {
-          note,
-          ms,
-          hz,
-          dottedMs: ms * 1.5,
-          dottedHz: 1000 / (ms * 1.5),
-          tripletMs: ms * 2 / 3,
-          tripletHz: 1000 / (ms * 2 / 3)
-        };
-      });
-    }
-
     function updateDelayTable(bpm) {
-      const data = calcValues(bpm);
-      tbody.innerHTML = '';
-      data.forEach(row => {
-        tbody.innerHTML += `
+      tableBody.innerHTML = "";
+      notes.forEach(note => {
+        const [base, denom] = note.split("/").map(Number);
+        const beatFactor = base / denom;
+        const ms = (60000 / bpm) * (4 * beatFactor);
+        const hz = 1000 / ms;
+        tableBody.innerHTML += `
           <tr>
-            <td>${row.note}</td>
-            <td>${row.ms.toFixed(1)} ms / ${row.hz.toFixed(3)} Hz</td>
-            <td>${row.dottedMs.toFixed(1)} ms / ${row.dottedHz.toFixed(3)} Hz</td>
-            <td>${row.tripletMs.toFixed(1)} ms / ${row.tripletHz.toFixed(3)} Hz</td>
+            <td>${note}</td>
+            <td>${ms.toFixed(1)} ms / ${hz.toFixed(3)} Hz</td>
+            <td>${(ms * 1.5).toFixed(1)} ms</td>
+            <td>${((ms * 2) / 3).toFixed(1)} ms</td>
           </tr>`;
       });
     }
 
     function updateReverbTable(bpm) {
+      reverbTableBody.innerHTML = "";
       const beatMs = 60000 / bpm;
-      reverbTbody.innerHTML = '';
       reverbSizes.forEach(size => {
         const pre = size.preDelayBeats * beatMs;
         const decay = size.decayBeats * beatMs;
         const total = pre + decay;
-        reverbTbody.innerHTML += `
+        reverbTableBody.innerHTML += `
           <tr>
             <td>${size.name}</td>
             <td>${pre.toFixed(2)} ms</td>
@@ -377,28 +331,23 @@
     bpmInput.addEventListener('input', updateTables);
     updateTables();
 
+    // Theme toggle
     function setTheme(dark) {
       if (dark) {
         body.classList.add('dark');
-        themeToggle.setAttribute('aria-checked', 'true');
+        localStorage.setItem('theme', 'dark');
       } else {
         body.classList.remove('dark');
-        themeToggle.setAttribute('aria-checked', 'false');
+        localStorage.setItem('theme', 'light');
       }
     }
 
-    setTheme(true);
+    const savedTheme = localStorage.getItem('theme');
+    setTheme(savedTheme === 'dark');
 
     themeToggle.addEventListener('click', () => {
       const isDark = body.classList.contains('dark');
       setTheme(!isDark);
-    });
-
-    themeToggle.addEventListener('keydown', (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        themeToggle.click();
-      }
     });
   </script>
 </body>
