@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Videos — BabyHooligan</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <title>Videos</title>
   <link rel="canonical" href="https://babyhooligan.com/videos" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
+
   <style>
     :root {
       --bg: #f4f4f4;
@@ -15,6 +16,10 @@
       --header-link: #000000;
       --accent: #5c7896;
       --border: #ddd;
+      --table-bg: #ffffff;
+      --hover-bg: #d0f4de;
+      --hover-text: #000000;
+      --ui-radius: 10px;
     }
 
     body.dark {
@@ -24,6 +29,9 @@
       --header-link: #ffffff;
       --accent: #8aa0bf;
       --border: #444;
+      --table-bg: #2a2a2a;
+      --hover-bg: #3a5a40;
+      --hover-text: #ffffff;
     }
 
     body {
@@ -44,11 +52,14 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      flex-wrap: wrap;
     }
 
     .header-left {
       display: flex;
       align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
     }
 
     .logo {
@@ -63,25 +74,16 @@
       transform: scale(1.5);
     }
 
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-      margin-left: 1.5rem;
-    }
-
-    .nav-links a {
+    .nav-link {
       text-decoration: none;
       color: var(--text);
       font-weight: 500;
+      font-size: 1rem;
       transition: color 0.3s;
     }
 
-    body.dark .nav-links a:hover {
-      color: #fff;
-    }
-
-    body:not(.dark) .nav-links a:hover {
-      color: #000;
+    .nav-link:hover {
+      color: var(--accent);
     }
 
     .theme-toggle {
@@ -91,6 +93,7 @@
       background: var(--header-link);
       position: relative;
       cursor: pointer;
+      transition: background 0.3s;
     }
 
     .toggle-thumb {
@@ -101,7 +104,7 @@
       height: 20px;
       background: var(--header-bg);
       border-radius: 50%;
-      transition: left 0.3s, background 0.3s;
+      transition: left 0.3s;
     }
 
     body.dark .toggle-thumb {
@@ -109,19 +112,19 @@
     }
 
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
       padding: 0 1.5rem;
       text-align: center;
     }
 
     h1 {
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     p {
       font-size: 1.1rem;
-      color: var(--text);
     }
 
     footer {
@@ -146,17 +149,36 @@
     body:not(.dark) .youtube-icon:hover {
       fill: #000;
     }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .header-left {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .nav-link {
+        font-size: 0.95rem;
+      }
+
+      .theme-toggle {
+        margin-left: auto;
+      }
+    }
   </style>
 </head>
 <body class="dark">
   <header>
     <div class="header-left">
-      <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
-      <nav class="nav-links">
-        <a href="/about">About</a>
-        <a href="/delay-reverb-time-calculator">Calculator</a>
-        <a href="/videos">Videos</a>
-      </nav>
+      <a href="/"><img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" /></a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/delay-reverb-time-calculator" class="nav-link">Calculator</a>
+      <a href="/videos" class="nav-link">Videos</a>
     </div>
     <div class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle light and dark mode">
       <div class="toggle-thumb"></div>
@@ -165,7 +187,7 @@
 
   <main>
     <h1>Videos</h1>
-    <p>Videos coming soon...</p>
+    <p>Coming soon.</p>
   </main>
 
   <footer>
