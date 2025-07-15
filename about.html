@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About Me – BabyHooligan</title>
+  <title>About — BabyHooligan</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
+  <link rel="canonical" href="https://babyhooligan.com/about" />
+
   <style>
     :root {
       --bg: #f4f4f4;
@@ -55,7 +57,6 @@
     .header-left {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
     }
 
     .logo {
@@ -68,6 +69,22 @@
 
     .logo:hover {
       transform: scale(1.5);
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      margin-left: 1rem;
+      transition: color 0.3s;
+    }
+
+    body.dark .nav-link:hover {
+      color: #fff;
+    }
+
+    body:not(.dark) .nav-link:hover {
+      color: #000;
     }
 
     .theme-toggle {
@@ -95,33 +112,30 @@
       left: 27px;
     }
 
-    a.home-link {
-      color: var(--header-link);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-    }
-
     main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       max-width: 800px;
       margin: 0 auto;
-      padding: 3rem 1.5rem;
-      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .about-image {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: var(--ui-radius);
+      margin-bottom: 2rem;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
 
     p {
+      line-height: 1.7;
       font-size: 1.1rem;
-      line-height: 1.6;
-      max-width: 700px;
+      text-align: justify;
     }
 
     footer {
@@ -146,13 +160,30 @@
     body:not(.dark) .youtube-icon:hover {
       fill: #000;
     }
+
+    @media (max-width: 768px) {
+      .about-image {
+        max-height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-link {
+        font-size: 0.9rem;
+        margin-left: 0.6rem;
+      }
+    }
   </style>
 </head>
 <body class="dark">
   <header>
     <div class="header-left">
-      <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
-      <a href="index.html" class="home-link">Home</a>
+      <a href="/">
+        <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
+      </a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/delay-reverb-time-calculator" class="nav-link">Calculator</a>
+      <a href="/videos" class="nav-link">Videos</a>
     </div>
     <div class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle light and dark mode">
       <div class="toggle-thumb"></div>
@@ -160,9 +191,12 @@
   </header>
 
   <main>
-    <h1>About Me</h1>
+    <img class="about-image" src="https://github.com/babyhooligan/babyhooligan-site/blob/main/background.png?raw=true" alt="Background" />
+    <h1>About</h1>
     <p>
-      I got into music production because I loved shaping sound since I was a kid. I'm a bedroom producer who enjoys dub and atmospheric techno, Detroit techno, and all kinds of inspiring electronic music. With a passion for sound design and production, I started this site to share simple tools and practical knowledge for beginners starting their journey. One of those tools is the delay and reverb calculator—just a small way to make learning and creating music a little easier.
+      I’m a bedroom producer who loves electronic music, especially dub techno.  
+      I’ve picked up some skills in sound design and production over time, and now I want to share what I’ve learned with others who are just starting out.  
+      I also built a calculator to make life a bit easier on this path.
     </p>
   </main>
 
