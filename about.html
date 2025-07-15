@@ -3,24 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About Me — BabyHooligan</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>About Me – BabyHooligan</title>
   <link rel="icon" type="image/png" href="favicon.png" />
-  <meta name="description" content="Learn more about BabyHooligan — a bedroom producer passionate about dub techno, Detroit aesthetics and creative sound design." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #222;
+      --header-bg: #f4f4f4;
+      --header-link: #000000;
+      --accent: #5c7896;
+      --border: #ddd;
+      --table-bg: #ffffff;
+      --hover-bg: #d0f4de;
+      --hover-text: #000000;
+      --ui-radius: 10px;
+    }
+
+    body.dark {
+      --bg: #1a1a1a;
+      --text: #eaeaea;
+      --header-bg: #1a1a1a;
+      --header-link: #ffffff;
+      --accent: #8aa0bf;
+      --border: #444;
+      --table-bg: #2a2a2a;
+      --hover-bg: #3a5a40;
+      --hover-text: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter Display', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--header-bg);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.5);
+    }
+
+    .theme-toggle {
+      width: 50px;
+      height: 26px;
+      border-radius: 13px;
+      background: var(--header-link);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: var(--header-bg);
+      border-radius: 50%;
+      transition: left 0.3s, background 0.3s;
+    }
+
+    body.dark .toggle-thumb {
+      left: 27px;
+    }
+
+    a.home-link {
+      color: var(--header-link);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .youtube-icon {
+      fill: #888;
+      transition: fill 0.3s;
+    }
+
+    body.dark .youtube-icon:hover {
+      fill: #fff;
+    }
+
+    body:not(.dark) .youtube-icon:hover {
+      fill: #000;
+    }
+  </style>
 </head>
 <body class="dark">
   <header>
     <div class="header-left">
       <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
-      <a href="index.html" class="about-link">Home</a>
+      <a href="index.html" class="home-link">Home</a>
+    </div>
+    <div class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle light and dark mode">
+      <div class="toggle-thumb"></div>
     </div>
   </header>
 
-  <main style="max-width: 800px; margin: 2rem auto; padding: 1rem;">
+  <main>
     <h1>About Me</h1>
-    <p>I got into music production because I loved shaping sound since I was a kid. I'm a bedroom producer who’s passionate about dub techno, Detroit-inspired grooves, ambient textures and sound design.</p>
-    <p>I'm not a professional, just someone who enjoys making music and learning along the way. That’s why I built this site — to help newcomers understand timing, reverb, and delays more intuitively with useful tools like this calculator.</p>
-    <p>If you're starting out and find this helpful, then we’re already on the same wavelength.</p>
+    <p>
+      I got into music production because I loved shaping sound since I was a kid. I'm a bedroom producer who enjoys dub and atmospheric techno, Detroit techno, and all kinds of inspiring electronic music. With a passion for sound design and production, I started this site to share simple tools and practical knowledge for beginners starting their journey. One of those tools is the delay and reverb calculator—just a small way to make learning and creating music a little easier.
+    </p>
   </main>
 
   <footer>
@@ -31,5 +174,34 @@
       </svg>
     </a>
   </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    function setTheme(dark) {
+      if (dark) {
+        body.classList.add('dark');
+        themeToggle.setAttribute('aria-checked', 'true');
+      } else {
+        body.classList.remove('dark');
+        themeToggle.setAttribute('aria-checked', 'false');
+      }
+    }
+
+    setTheme(true);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = body.classList.contains('dark');
+      setTheme(!isDark);
+    });
+
+    themeToggle.addEventListener('keydown', (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        themeToggle.click();
+      }
+    });
+  </script>
 </body>
 </html>
