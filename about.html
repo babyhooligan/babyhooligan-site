@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — BabyHooligan</title>
+  <title>About</title>
   <link rel="canonical" href="https://babyhooligan.com/about" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
 
   <style>
@@ -13,12 +13,12 @@
       --bg: #f4f4f4;
       --text: #222;
       --header-bg: #f4f4f4;
-      --header-link: #000;
+      --header-link: #000000;
       --accent: #5c7896;
       --border: #ddd;
       --table-bg: #ffffff;
       --hover-bg: #d0f4de;
-      --hover-text: #000;
+      --hover-text: #000000;
       --ui-radius: 10px;
     }
 
@@ -26,19 +26,20 @@
       --bg: #1a1a1a;
       --text: #eaeaea;
       --header-bg: #1a1a1a;
-      --header-link: #fff;
+      --header-link: #ffffff;
       --accent: #8aa0bf;
       --border: #444;
       --table-bg: #2a2a2a;
       --hover-bg: #3a5a40;
-      --hover-text: #fff;
+      --hover-text: #ffffff;
     }
 
     body {
-      margin: 0;
       font-family: 'Inter Display', sans-serif;
       background: var(--bg);
       color: var(--text);
+      margin: 0;
+      padding: 0;
       transition: background 0.3s, color 0.3s;
     }
 
@@ -51,11 +52,14 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      flex-wrap: wrap;
     }
 
     .header-left {
       display: flex;
       align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
     }
 
     .logo {
@@ -71,15 +75,15 @@
     }
 
     .nav-link {
-      margin-left: 1.25rem;
       text-decoration: none;
-      color: var(--header-link);
+      color: var(--text);
       font-weight: 500;
+      font-size: 1rem;
       transition: color 0.3s;
     }
 
     .nav-link:hover {
-      text-decoration: underline;
+      color: var(--accent);
     }
 
     .theme-toggle {
@@ -89,6 +93,7 @@
       background: var(--header-link);
       position: relative;
       cursor: pointer;
+      transition: background 0.3s;
     }
 
     .toggle-thumb {
@@ -106,34 +111,29 @@
       left: 27px;
     }
 
-    .hero {
-      width: 100%;
-      max-height: 400px;
-      overflow: hidden;
-    }
-
-    .hero img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    main {
+    .about-container {
       max-width: 800px;
       margin: 2rem auto;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    .about-image {
+      width: 100%;
+      height: auto;
+      border-radius: var(--ui-radius);
+      margin-bottom: 2rem;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      text-align: center;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
     }
 
     footer {
@@ -161,18 +161,30 @@
 
     @media (max-width: 768px) {
       header {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .header-left {
+        flex-wrap: wrap;
         gap: 0.5rem;
-        align-items: flex-start;
+      }
+
+      .nav-link {
+        font-size: 0.95rem;
+      }
+
+      .theme-toggle {
+        margin-left: auto;
       }
     }
   </style>
 </head>
-
 <body class="dark">
   <header>
     <div class="header-left">
-      <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
+      <a href="/"><img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" /></a>
       <a href="/about" class="nav-link">About</a>
       <a href="/delay-reverb-time-calculator" class="nav-link">Calculator</a>
       <a href="/videos" class="nav-link">Videos</a>
@@ -182,17 +194,14 @@
     </div>
   </header>
 
-  <div class="hero">
-    <img src="https://github.com/babyhooligan/babyhooligan-site/blob/main/background.png?raw=true" alt="Background" />
-  </div>
-
   <main>
-    <h1>About</h1>
-    <p>
-      I’m a bedroom producer who loves dub, atmospheric techno, Detroit techno, and just good electronic music.
-      I’ve picked up some skills in sound design and production over time, and now I want to share what I’ve learned
-      with others who are just starting out. I also built a calculator to make life a bit easier on this path.
-    </p>
+    <section class="about-container">
+      <img src="https://github.com/babyhooligan/babyhooligan-site/blob/main/background.png?raw=true" alt="Background" class="about-image" />
+      <h1>About</h1>
+      <p>I’m a bedroom producer who loves dub, atmospheric techno, Detroit techno, and just good electronic music.</p>
+      <p>I’ve picked up some skills in sound design and production over time, and now I want to share what I’ve learned with others who are just starting out.</p>
+      <p>I also built a calculator to make life a bit easier on this path.</p>
+    </section>
   </main>
 
   <footer>
