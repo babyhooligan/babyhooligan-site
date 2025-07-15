@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Delay & Reverb Calculator</title>
+  <title>Delay & Reverb Time Calculator</title>
   <link rel="canonical" href="https://babyhooligan.com/delay-reverb-time-calculator" />
-
   <link rel="icon" type="image/png" href="favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Display&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --bg: #f4f4f4;
       --text: #222;
       --header-bg: #f4f4f4;
-      --header-link: #000000;
+      --header-link: #000;
       --accent: #5c7896;
       --border: #ddd;
-      --table-bg: #ffffff;
+      --table-bg: #fff;
       --hover-bg: #d0f4de;
-      --hover-text: #000000;
+      --hover-text: #000;
       --ui-radius: 10px;
     }
 
@@ -27,12 +25,12 @@
       --bg: #1a1a1a;
       --text: #eaeaea;
       --header-bg: #1a1a1a;
-      --header-link: #ffffff;
+      --header-link: #fff;
       --accent: #8aa0bf;
       --border: #444;
       --table-bg: #2a2a2a;
       --hover-bg: #3a5a40;
-      --hover-text: #ffffff;
+      --hover-text: #fff;
     }
 
     body {
@@ -40,19 +38,18 @@
       background: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 0;
       transition: background 0.3s, color 0.3s;
     }
 
     header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 0.75rem 1.5rem;
       background: var(--header-bg);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 1000;
     }
 
     .header-left {
@@ -65,7 +62,7 @@
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s;
     }
 
     .logo:hover {
@@ -74,23 +71,19 @@
 
     .nav-links {
       display: flex;
-      gap: 1rem;
-      margin-left: 1.5rem;
+      gap: 1.5rem;
+      margin-left: 1rem;
     }
 
-    .nav-link {
+    .nav-links a {
       text-decoration: none;
-      color: var(--text);
+      color: var(--header-link);
       font-weight: 500;
       transition: color 0.3s;
     }
 
-    body.dark .nav-link:hover {
-      color: #fff;
-    }
-
-    body:not(.dark) .nav-link:hover {
-      color: #000;
+    .nav-links a:hover {
+      opacity: 0.75;
     }
 
     .theme-toggle {
@@ -100,7 +93,6 @@
       background: var(--header-link);
       position: relative;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
     .toggle-thumb {
@@ -111,7 +103,7 @@
       height: 20px;
       background: var(--header-bg);
       border-radius: 50%;
-      transition: left 0.3s, background 0.3s;
+      transition: left 0.3s;
     }
 
     body.dark .toggle-thumb {
@@ -129,48 +121,32 @@
     .calculator-container {
       flex: 1;
       max-width: 800px;
-      padding: 0 1rem;
-    }
-
-    .section {
-      margin-bottom: 4rem;
+      width: 100%;
     }
 
     .bpm-control {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      text-align: center;
       margin-bottom: 2rem;
     }
 
-    .bpm-control label {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
     .bpm-control input[type="number"] {
-      width: 160px;
-      padding: 0.7rem;
-      font-size: 1.3rem;
-      text-align: center;
+      padding: 0.6rem;
+      font-size: 1.2rem;
       border: 1px solid var(--border);
       border-radius: var(--ui-radius);
       background: var(--table-bg);
       color: var(--text);
-      outline: none;
-      transition: background 0.3s, border-color 0.3s;
+      width: 140px;
     }
 
-    .bpm-control input[type="number"]:focus {
-      border-color: var(--accent);
-      background: #e6f0ff;
-      color: #004a99;
+    h1 {
+      text-align: center;
+      margin: 2rem 0 1rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.95rem;
       background: var(--table-bg);
       border: 1px solid var(--border);
       border-radius: var(--ui-radius);
@@ -178,29 +154,14 @@
     }
 
     th, td {
-      padding: 0.7rem;
+      padding: 0.75rem;
       text-align: center;
       border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      background: var(--table-bg);
-      font-weight: 600;
-    }
-
-    tr {
-      background: var(--table-bg);
-      transition: background 0.3s, color 0.3s;
     }
 
     tr:hover {
       background: var(--hover-bg);
       color: var(--hover-text);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 1rem;
     }
 
     footer {
@@ -226,15 +187,19 @@
       fill: #000;
     }
 
-    @media (max-width: 1024px) {
-      main {
-        flex-direction: column;
-        align-items: center;
-      }
-
+    @media (max-width: 768px) {
       header {
         flex-direction: column;
+        align-items: flex-start;
         gap: 1rem;
+      }
+
+      .nav-links {
+        margin-left: 0;
+      }
+
+      main {
+        padding: 1.5rem;
       }
     }
   </style>
@@ -242,14 +207,12 @@
 <body class="dark">
   <header>
     <div class="header-left">
-      <a href="/">
-        <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
-      </a>
-      <div class="nav-links">
-        <a href="/about" class="nav-link">About</a>
-        <a href="/delay-reverb-time-calculator" class="nav-link">Calculator</a>
-        <a href="/videos" class="nav-link">Videos</a>
-      </div>
+      <img src="https://yt3.googleusercontent.com/d_1wB5uiSDgS_JTQm_CrE8dc4cwsat0JI5q3zIxr-htOR7f337JhjUALYUkwbmMs6740zix9mA=s160-c-k-c0x00ffffff-no-rj" alt="Logo" class="logo" />
+      <nav class="nav-links">
+        <a href="/about">About</a>
+        <a href="/delay-reverb-time-calculator">Calculator</a>
+        <a href="/videos">Videos</a>
+      </nav>
     </div>
     <div class="theme-toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle light and dark mode">
       <div class="toggle-thumb"></div>
@@ -257,47 +220,43 @@
   </header>
 
   <main>
-    <section class="calculator-container">
+    <div class="calculator-container">
       <div class="bpm-control">
-        <label for="bpmInput">BPM</label>
+        <label for="bpmInput">BPM</label><br />
         <input id="bpmInput" type="number" min="1" max="300" value="120" />
       </div>
 
       <h1>Reverb Calculator</h1>
-      <section class="section">
-        <table>
-          <thead>
-            <tr>
-              <th>Reverb Size</th>
-              <th>Pre-delay</th>
-              <th>Decay Time</th>
-              <th>Total Reverb Time</th>
-            </tr>
-          </thead>
-          <tbody id="reverbTableBody"></tbody>
-        </table>
-      </section>
+      <table>
+        <thead>
+          <tr>
+            <th>Reverb Size</th>
+            <th>Pre-delay</th>
+            <th>Decay Time</th>
+            <th>Total Reverb Time</th>
+          </tr>
+        </thead>
+        <tbody id="reverbTableBody"></tbody>
+      </table>
 
       <h1>Delay Time Calculator</h1>
-      <section class="section">
-        <table>
-          <thead>
-            <tr>
-              <th>Note Value</th>
-              <th>Notes</th>
-              <th>Dotted</th>
-              <th>Triplets</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </section>
-    </section>
+      <table>
+        <thead>
+          <tr>
+            <th>Note Value</th>
+            <th>Notes</th>
+            <th>Dotted</th>
+            <th>Triplets</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
   </main>
 
   <footer>
     <div>© 2025 BabyHooligan</div>
-    <a href="https://youtube.com/@baby.hooligan?si=PHZCx66GTvvhCtpt" target="_blank" aria-label="YouTube">
+    <a href="https://youtube.com/@baby.hooligan" target="_blank" aria-label="YouTube">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 576 512" class="youtube-icon">
         <path d="M549.7 124.1c-6.3-24-25.1-42.8-49-49.1C457.5 64 288 64 288 64s-169.5 0-212.7 11c-23.9 6.3-42.7 25.1-49 49.1C16 168.3 16 256 16 256s0 87.7 10.3 131.9c6.3 24 25.1 42.8 49 49.1C118.5 448 288 448 288 448s169.5 0 212.7-11c23.9-6.3 42.7-25.1 49-49.1C560 343.7 560 256 560 256s0-87.7-10.3-131.9zM232 336V176l142 80-142 80z"/>
       </svg>
@@ -311,7 +270,7 @@
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
-    const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64", "1/128", "1/256", "1/512"];
+    const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32", "1/64"];
     const reverbSizes = [
       { name: "Hall", preDelayBeats: 0.125, decayBeats: 7.875 },
       { name: "Large Room", preDelayBeats: 0.0625, decayBeats: 3.875 },
@@ -321,18 +280,14 @@
 
     function calcValues(bpm) {
       return notes.map(note => {
-        let [base, denom] = note.split('/').map(Number);
-        let beatFactor = base / denom;
-        let ms = (60000 / bpm) * (4 * beatFactor);
-        let hz = 1000 / ms;
+        const [base, denom] = note.split('/').map(Number);
+        const beatFactor = base / denom;
+        const ms = (60000 / bpm) * (4 * beatFactor);
         return {
           note,
           ms,
-          hz,
           dottedMs: ms * 1.5,
-          dottedHz: 1000 / (ms * 1.5),
-          tripletMs: ms * 2 / 3,
-          tripletHz: 1000 / (ms * 2 / 3)
+          tripletMs: ms * 2 / 3
         };
       });
     }
@@ -344,9 +299,9 @@
         tbody.innerHTML += `
           <tr>
             <td>${row.note}</td>
-            <td>${row.ms.toFixed(1)} ms / ${row.hz.toFixed(3)} Hz</td>
-            <td>${row.dottedMs.toFixed(1)} ms / ${row.dottedHz.toFixed(3)} Hz</td>
-            <td>${row.tripletMs.toFixed(1)} ms / ${row.tripletHz.toFixed(3)} Hz</td>
+            <td>${row.ms.toFixed(1)} ms</td>
+            <td>${row.dottedMs.toFixed(1)} ms</td>
+            <td>${row.tripletMs.toFixed(1)} ms</td>
           </tr>`;
       });
     }
@@ -361,9 +316,9 @@
         reverbTbody.innerHTML += `
           <tr>
             <td>${size.name}</td>
-            <td>${pre.toFixed(2)} ms</td>
-            <td>${decay.toFixed(2)} ms</td>
-            <td>${total.toFixed(2)} ms</td>
+            <td>${pre.toFixed(1)} ms</td>
+            <td>${decay.toFixed(1)} ms</td>
+            <td>${total.toFixed(1)} ms</td>
           </tr>`;
       });
     }
@@ -388,20 +343,18 @@
       }
     }
 
-    setTheme(true);
-
     themeToggle.addEventListener('click', () => {
-      const isDark = body.classList.contains('dark');
-      setTheme(!isDark);
+      setTheme(!body.classList.contains('dark'));
     });
 
     themeToggle.addEventListener('keydown', (e) => {
-      if (e.key === "Enter" || e.key === " ") {
+      if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         themeToggle.click();
       }
     });
+
+    setTheme(true);
   </script>
 </body>
 </html>
-
