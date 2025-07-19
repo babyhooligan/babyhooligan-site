@@ -284,83 +284,91 @@
     </a>
   </footer>
 
-  <script>
-    const bpmInput = document.getElementById('bpmInput');
-    const tableBody = document.getElementById('tableBody');
-    const reverbTableBody = document.getElementById('reverbTableBody');
-    const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
+<script>
+  const bpmInput = document.getElementById('bpmInput');
+  const tableBody = document.getElementById('tableBody');
+  const reverbTableBody = document.getElementById('reverbTableBody');
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
 
-    const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32"];
-    const reverbSizes = [
-      { name: "Hall", preDelayBeats: 0.125, decayBeats: 7.875 },
-      { name: "Large Room", preDelayBeats: 0.0625, decayBeats: 3.875 },
-      { name: "Small Room", preDelayBeats: 0.03125, decayBeats: 1.53125 },
-      { name: "Tight Ambience", preDelayBeats: 0.0078125, decayBeats: 0.4921875 }
-    ];
+  const notes = ["1/1", "1/2", "1/4", "1/8", "1/16", "1/32"];
+  const reverbSizes = [
+    { name: "Hall", preDelayBeats: 0.125, decayBeats: 7.875 },
+    { name: "Large Room", preDelayBeats: 0.0625, decayBeats: 3.875 },
+    { name: "Small Room", preDelayBeats: 0.03125, decayBeats: 1.53125 },
+    { name: "Tight Ambience", preDelayBeats: 0.0078125, decayBeats: 0.4921875 }
+  ];
 
-    function updateDelayTable(bpm) {
-      tableBody.innerHTML = "";
-      notes.forEach(note => {
-        const [base, denom] = note.split("/").map(Number);
-        const beatFactor = base / denom;
-        const ms = (60000 / bpm) * (4 * beatFactor);
-        const hz = 1000 / ms;
-        tableBody.innerHTML += `
-          <tr>
-            <td>${note}</td>
-            <td>${ms.toFixed(1)} ms / ${hz.toFixed(3)} Hz</td>
-            <td>${(ms * 1.5).toFixed(1)} ms</td>
-            <td>${((ms * 2) / 3).toFixed(1)} ms</td>
-          </tr>`;
-      });
-    }
+  function formatHz(ms) {
+    const hz = 1000 / ms;
+    return `${hz.toFixed(2)} Hz`;
+  }
 
-    function updateReverbTable(bpm) {
-      reverbTableBody.innerHTML = "";
-      const beatMs = 60000 / bpm;
-      reverbSizes.forEach(size => {
-        const pre = size.preDelayBeats * beatMs;
-        const decay = size.decayBeats * beatMs;
-        const total = pre + decay;
-        reverbTableBody.innerHTML += `
-          <tr>
-            <td>${size.name}</td>
-            <td>${pre.toFixed(2)} ms</td>
-            <td>${decay.toFixed(2)} ms</td>
-            <td>${total.toFixed(2)} ms</td>
-          </tr>`;
-      });
-    }
+  function updateDelayTable(bpm) {
+    tableBody.innerHTML = "";
+    notes.forEach(note => {
+      const [base, denom] = note.split("/").map(Number);
+      const beatFactor = base / denom;
+      const ms = (60000 / bpm) * (4 * beatFactor);
+      const dottedMs = ms * 1.5;
+      const tripletMs = (ms * 2) / 3;
 
-    function updateTables() {
-      const bpm = Number(bpmInput.value);
-      if (!bpm || bpm < 1) return;
-      updateDelayTable(bpm);
-      updateReverbTable(bpm);
-    }
-
-    bpmInput.addEventListener('input', updateTables);
-    updateTables();
-
-    // Theme toggle
-    function setTheme(dark) {
-      if (dark) {
-        body.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        body.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      }
-    }
-
-    const savedTheme = localStorage.getItem('theme');
-    setTheme(savedTheme === 'dark');
-
-    themeToggle.addEventListener('click', () => {
-      const isDark = body.classList.contains('dark');
-      setTheme(!isDark);
+      tableBody.innerHTML += `
+        <tr>
+          <td>${note}</td>
+          <td>${ms.toFixed(1)} ms / ${formatHz(ms)}</td>
+          <td>${dottedMs.toFixed(1)} ms / ${formatHz(dottedMs)}</td>
+          <td>${tripletMs.toFixed(1)} ms / ${formatHz(tripletMs)}</td>
+        </tr>`;
     });
-  </script>
+  }
+
+  function updateReverbTable(bpm) {
+    reverbTableBody.innerHTML = "";
+    const beatMs = 60000 / bpm;
+    reverbSizes.forEach(size => {
+      const pre = size.preDelayBeats * beatMs;
+      const decay = size.decayBeats * beatMs;
+      const total = pre + decay;
+      reverbTableBody.innerHTML += `
+        <tr>
+          <td>${size.name}</td>
+          <td>${pre.toFixed(2)} ms</td>
+          <td>${decay.toFixed(2)} ms</td>
+          <td>${total.toFixed(2)} ms</td>
+        </tr>`;
+    });
+  }
+
+  function updateTables() {
+    const bpm = Number(bpmInput.value);
+    if (!bpm || bpm < 1) return;
+    updateDelayTable(bpm);
+    updateReverbTable(bpm);
+  }
+
+  bpmInput.addEventListener('input', updateTables);
+  updateTables();
+
+  // Theme toggle
+  function setTheme(dark) {
+    if (dark) {
+      body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  setTheme(savedTheme === 'dark');
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = body.classList.contains('dark');
+    setTheme(!isDark);
+  });
+</script>
+
 </body>
 </html>
